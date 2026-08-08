@@ -140,7 +140,8 @@ function createMcpServer() {
     },
     async ({ url }) => {
       if (!browser) {
-        browser = await chromium.launch({ headless: false }); // Open visible browser
+        const isHeadless = process.env.HEADLESS !== 'false';
+        browser = await chromium.launch({ headless: isHeadless });
         page = await browser.newPage();
       }
       await page!.goto(url);
@@ -375,7 +376,7 @@ app.post("/messages", async (req, res) => {
   }
 });
 
-const PORT = 3001;
+const PORT = Number(process.env.PORT) || 3001;
 
 // If a command line flag like --stdio is passed, use stdio instead of express
 if (process.argv.includes("--stdio")) {
@@ -385,8 +386,9 @@ if (process.argv.includes("--stdio")) {
     console.error("Chess MCP Stdio Server running");
   });
 } else {
-  app.listen(PORT, () => {
-    console.log(`Chess MCP SSE Server running on http://localhost:${PORT}/sse`);
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Chess MCP SSE Server running on port ${PORT}`);
+    console.log(`SSE Endpoint: http://0.0.0.0:${PORT}/sse`);
     console.log(`To run via Stdio for ChatGPT Desktop, run: pnpm exec tsx index.ts --stdio`);
   });
 }
