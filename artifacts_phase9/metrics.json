@@ -1,0 +1,117 @@
+{
+  "totalGames": 10,
+  "completedGames": 10,
+  "totalDurationMs": 458576,
+  "games": [
+    {
+      "gameId": "game_01",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 46515,
+      "avgLatencyMs": 987,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_02",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 42667,
+      "avgLatencyMs": 893,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_03",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 46578,
+      "avgLatencyMs": 990,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_04",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 47114,
+      "avgLatencyMs": 1009,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_05",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 48410,
+      "avgLatencyMs": 1037,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_06",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 44349,
+      "avgLatencyMs": 933,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_07",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 48883,
+      "avgLatencyMs": 1044,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_08",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 41625,
+      "avgLatencyMs": 863,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_09",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 45844,
+      "avgLatencyMs": 959,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    },
+    {
+      "gameId": "game_10",
+      "winner": "Draw",
+      "moveCount": 40,
+      "durationMs": 46554,
+      "avgLatencyMs": 989,
+      "recoveryEvents": 0,
+      "engineErrors": 0,
+      "browserErrors": 0,
+      "domRecoveryCount": 0
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+out/
+scratch/
+e2e_output/
+*.log
+*.png
+*.jpeg
+*.jpg
+.env
+.DS_Store
