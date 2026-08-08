@@ -351,13 +351,20 @@ FEN: ${game.fen()}`
 
 // Support both SSE and Stdio
 const app = express();
+
+// Enable JSON body parsing for MCP POST requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Headers", "*");
   if (req.method === "OPTIONS") return res.status(200).end();
   next();
 });
+
+const activeTransports = new Map<string, SSEServerTransport>();
 
 app.get("/", (req, res) => {
   res.send(`
@@ -395,8 +402,15 @@ app.get("/health", (req, res) => {
 });
 
 app.get("/sse", async (req, res) => {
-  activeServer = createMcpServer();
-  transport = new SSEServerTransport("/messages", res);
+  const activeServer = createMcpServer();
+  const transport = new SSEServerTransport("/messages", res);
+  
+  activeTransports.set(transport.sessionId, transport);
+  
+  transport.onclose = () => {
+    activeTransports.delete(transport.sessionId);
+  };
+
   await activeServer.connect(transport);
 });
 
@@ -408,10 +422,16 @@ app.get("/messages", (req, res) => {
 });
 
 app.post("/messages", async (req, res) => {
+  const sessionId = req.query.sessionId as string;
+  const transport = sessionId ? activeTransports.get(sessionId) : Array.from(activeTransports.values()).pop();
+  
   if (transport) {
-    await transport.handlePostMessage(req, res);
+    await transport.handlePostMessage(req, res, req.body);
   } else {
-    res.status(400).send("No active SSE connection");
+    res.status(400).json({
+      error: "No active SSE connection",
+      message: "Please establish an SSE stream via GET /sse before sending messages."
+    });
   }
 });
 
