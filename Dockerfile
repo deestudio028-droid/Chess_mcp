@@ -11,6 +11,9 @@ COPY package.json pnpm-lock.yaml ./
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
+# Install matching Playwright Chromium browser binaries
+RUN pnpm exec playwright install chromium
+
 # Copy application source
 COPY . .
 
