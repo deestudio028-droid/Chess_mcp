@@ -359,13 +359,52 @@ app.use((req, res, next) => {
   next();
 });
 
-let transport: SSEServerTransport;
-let activeServer: McpServer;
+app.get("/", (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>DeeChess MCP Server</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3rem; background: #0f172a; color: #f8fafc; line-height: 1.6; }
+          .card { background: #1e293b; padding: 2rem; border-radius: 12px; border: 1fr solid #334155; max-width: 600px; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+          h1 { color: #38bdf8; margin-top: 0; }
+          code { background: #0284c7; color: #fff; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }
+          ul { padding-left: 1.2rem; }
+          li { margin-bottom: 0.5rem; }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>♟️ DeeChess MCP Server</h1>
+          <p>Status: <span style="color:#4ade80; font-weight:bold;">ONLINE</span></p>
+          <h3>How to Connect:</h3>
+          <ul>
+            <li><strong>SSE Connection URL:</strong> <code>https://${req.headers.host}/sse</code></li>
+            <li><strong>Post Messages Endpoint:</strong> <code>https://${req.headers.host}/messages</code> (POST)</li>
+          </ul>
+          <p>For ChatGPT, Claude, or custom MCP clients, point your SSE transport URL to <code>https://${req.headers.host}/sse</code>.</p>
+        </div>
+      </body>
+    </html>
+  `);
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", server: "DeeChess MCP", timestamp: new Date().toISOString() });
+});
 
 app.get("/sse", async (req, res) => {
   activeServer = createMcpServer();
   transport = new SSEServerTransport("/messages", res);
   await activeServer.connect(transport);
+});
+
+app.get("/messages", (req, res) => {
+  res.status(405).json({
+    error: "Method Not Allowed",
+    message: "The /messages endpoint accepts HTTP POST requests from MCP clients. Connect via GET /sse first."
+  });
 });
 
 app.post("/messages", async (req, res) => {
