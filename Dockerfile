@@ -2,8 +2,8 @@ FROM mcr.microsoft.com/playwright:v1.49.0-noble
 
 WORKDIR /app
 
-# Enable Corepack & pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm directly via npm to avoid corepack signature errors
+RUN npm install -g pnpm
 
 # Copy package dependencies
 COPY package.json pnpm-lock.yaml ./
